@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+  # Marfeel Test
+  # Mounts the app as a volume and installs packages so we can develop locally
+  marfeel_test:
+    build: ./
+    command: npm start
+    volumes:
+      - ./:/src/app
+      - /src/app/node_modules
+    working_dir: /src/app
+    ports:
+     - "8080:8080"
+    restart: on-failure

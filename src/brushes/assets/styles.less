@@ -1,0 +1,74 @@
+@features-font-color: #FFFFFF;
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,500);
+
+.graph-wrapper{
+  position: relative;
+  top: 0;
+  left: 0;
+  min-width: 320px;
+  font-family: 'Roboto', sans-serif;
+}
+.graph-item{
+  width: 100%;
+  /* max-width: 320px; */
+  display: inline-flex;
+  flex-flow: row wrap;
+  box-shadow: 0 3px 3px -3px #9E9E9E;
+  padding-bottom: 15px;
+}
+.graph-container{
+  position: relative;
+  top: 20px;
+  height: 200px;
+  min-width: 200px;
+  width: 100%;
+  flex: 1 100%;
+}
+.graph-info{
+  /* max-width: 160px; */
+  flex: 1 40%;
+  justify-content: center;
+  word-break: break-all;
+  padding: 0 5%;
+  /* padding: 0 15px; */
+}
+.graph-info:nth-of-type(2){
+  text-align: right;
+}
+
+.graph-info-title{
+  /* flex: 1 1 auto; */
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 100%;
+  padding: 10px 0 4px 0;
+  font-weight: bold;
+}
+.graph-info-percentatge{
+  display: inline-block;
+  text-align: left;
+  font-size: 1.1rem;
+  padding-right: 6px;
+}
+.graph-info-value{
+  display: inline-block;
+  font-size: 1rem;
+  color: #C1C1C1;
+  word-break: break-all;
+}
+
+.graph-title{
+  fill: #C0C0C0;
+  text-transform: uppercase;
+  font-size: 140%;
+}
+
+.graph-description{
+  fill: #232323;
+  font-size: 200%;
+}
+.graph-area{
+  fill-opacity: .4;
+  stroke-width: 1.3;
+}
