@@ -12,6 +12,7 @@ const extractCSS = new ExtractTextPlugin('[name].css');
 const sourcePath = path.resolve(__dirname, 'src');
 const distPath = path.resolve(__dirname, 'public');
 
+
 const config = {
   context: sourcePath,
   entry: {
@@ -22,6 +23,10 @@ const config = {
     publicPath: '/public/',
     filename: '[name].bundle.js'
   },
+
+  /*
+
+  */
   module: {
     rules: [
       {

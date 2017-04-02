@@ -1,40 +1,52 @@
-//import  colors
+import styles from '../assets/styles.less';
 
-export default class Board {
-  constructor (width, height, background) {
-    this.width = options.width;
-    this.height = options.height;
-    this.background;
-    this.brushes = [];
-    this.activeBrush = options.activeBrush;
+import {default as WidgetBase, 
+        createElement, 
+        addAttributeToElement,
+        getScreenWidth,
+        getScreenHeight} from '../../common/widgetBase'
+
+export default class Board extends WidgetBase{
+  constructor (container, brushes) {
     
-    this._brushStokes = [];
-    this._domContainer;
+    super(container);
+    
+    this.brushes = brushes;
+    this.activeBrush;
+    this._toolsPalette;
+
+    this._lastBrushState;
+
+    this._canvasContainer;
+    this._context;
        
   }
 
-  print() {
-    return `Printing Board: w: ${this.width}, h: ${this.height}, background: ${this.background}`;
+  draw(){
+    //add to active path
+    //brush.draw(init {x,y}, end{x,y}) return path
   }
 
-  addBrush(brush /*Brush*/){
-    this.brushes.push(brush);
-  }
-
-  paint(){
-
+  saveHistory(){
+    //call context save
+    //remove drawListeners
   }
 
   _buildContainer() {
     
-    this._domContainer;
-    
-    return this._domContainer;
+    super._buildContainer();
+    console.log(styles)
+    this._canvasContainer = createElement('canvas', {class: styles.boardCanvas});
+    this.domNode.appendChild(this._canvasContainer);
+    //addCanvas();
   }
-  
-  init(){
-    let container = this._buildContainer();
-    this._buildChart(container);
-    this._startup();
+
+  _startup(){
+    super._startup();
+    //create context
+    this._context = this._canvasContainer.getContext('2d');
+    console.log(`board startup: ${this._context}`)
+    //create palette
+    //add listeners
   }
 }

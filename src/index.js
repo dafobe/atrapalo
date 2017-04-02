@@ -2,7 +2,7 @@
 if (module.hot) {
   module.hot.accept()
 }
-
+import {Board} from './board'
 //import layout
 //import canvas (board)
 //import brushes
@@ -15,6 +15,7 @@ if (module.hot) {
 
 const name = `Atrapalo`;
 
-console.log(`application ${name} entrypoint`);
+console.log(`application ${name} entrypoint 2`);
+const blackboard = new Board('paint_container');
 
-GraphComponent.init();
+blackboard.init();
