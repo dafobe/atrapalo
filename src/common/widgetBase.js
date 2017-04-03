@@ -8,17 +8,14 @@ This generic class defines the lifeCycle of the components
 */
 
 export default class WidgetBase {
-  constructor (container = 'app') {
-    console.log(`WidgetBase constructor: ${container}`)
+  constructor (container) {
+    //console.log(`WidgetBase constructor: ${container}`);
     this._domContainer = container;
     this.domNode;
-    this._context;
-       
   }
 
   _buildContainer() {
-    console.log(`WidgetBase: _buildContainer -> ${this._domContainer}`);
-
+    //console.log(`WidgetBase _buildContainer: ${this._domContainer}`)
     this.domNode = getContainerNode(this._domContainer);
 
     if(!this.domNode){
@@ -29,16 +26,23 @@ export default class WidgetBase {
   }
   
   _startup(){
-    console.log('WidgetBase: _startup');
+    //console.log('WidgetBase: _startup');
     //create context
     //create palette
   }
 
   init(){
-    console.log('WidgetBase: init');
+    //console.log('WidgetBase: init');
     this._buildContainer();
     this._startup();
   }
+}
+
+export const buildNode = function(type, attributes, container){
+  const element = createElement(type, attributes);
+  container && container.appendChild(element);
+  
+  return element;
 }
 
 export const getContainerNode = function(container){
@@ -49,7 +53,7 @@ export const getContainerNode = function(container){
   }
 }
 
-export const createElement = function(type, attributes){
+export const createElement = function(type, attributes = {}){
   let node = document.createElement(type);
   
   attributes && Object.keys(attributes).forEach(key => addAttributeToElement(node, key, attributes[key]))
@@ -58,7 +62,7 @@ export const createElement = function(type, attributes){
 }
 
 export const addAttributeToElement = function(element, name, value){
-  element.setAttribute(name, value)
+  element && element.setAttribute(name, value);
 }
 
 export const getScreenWidth = function (){

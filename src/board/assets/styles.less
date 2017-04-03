@@ -1,8 +1,44 @@
+@import '~normalize.css';
+
 @color-black: #000000;
 
-.board-canvas{
-  width: 100%;
-  height: 50%;
+/*
+.flex-menu{
+  display: flex;
+  flex-flow:  row wrap;
+  justify-content: space-around;
+}
 
-  background: @color-black;
+.flex-item{
+  flex: 0 1 100%;
+  background: yellow;
+}
+*/
+.board-container{
+  flex-flow:  row wrap;
+  height: 200px;
+}
+.board-canvas-container{
+  flex: 0 1 60%;
+  
+}
+.board-canvas{
+ height: 100%;
+ background: @color-black;
+}
+
+.board-tools{
+  flex: 0 1 40%;
+  height: 100%;
+  background: yellow;
+}
+
+.board-tools-history{
+  width: 100%;
+}
+.board-tools-brushes{
+  width: 100%;
+}
+.board-tools-styles{
+  width: 100%;
 }

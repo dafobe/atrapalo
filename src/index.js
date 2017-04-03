@@ -2,7 +2,9 @@
 if (module.hot) {
   module.hot.accept()
 }
-import {Board} from './board'
+
+import Layout from './layout';
+import {Board} from './board';
 //import layout
 //import canvas (board)
 //import brushes

@@ -1,1 +1,5 @@
-require('./styles.less');
+import styles from './assets/styles.less'
+
+export default function(){
+
+}

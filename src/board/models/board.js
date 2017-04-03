@@ -1,23 +1,25 @@
 import styles from '../assets/styles.less';
 
+
 import {default as WidgetBase, 
         createElement, 
         addAttributeToElement,
+        buildNode,
         getScreenWidth,
-        getScreenHeight} from '../../common/widgetBase'
+        getScreenHeight} from '../../common/widgetBase';
+
+import ToolsPalette from './toolsPalette';
 
 export default class Board extends WidgetBase{
-  constructor (container, brushes) {
-    
+  constructor (container, brushes = []) {
     super(container);
     
     this.brushes = brushes;
-    this.activeBrush;
-    this._toolsPalette;
-
-    this._lastBrushState;
+    this.toolsPalette = {};
+    this.canvas;
 
     this._canvasContainer;
+    this._toolsContainer;
     this._context;
        
   }
@@ -32,21 +34,33 @@ export default class Board extends WidgetBase{
     //remove drawListeners
   }
 
+  /**
+  * Overrides super build method
+  */
   _buildContainer() {
+    this.domNode = super._buildContainer();
+
+    const canvasWrapper = buildNode('div', {class: 'board-canvas-container'}, this.domNode);
+
+    this._canvasContainer = buildNode('canvas', {class: 'board-canvas'}, canvasWrapper);
+    this._toolsContainer = buildNode('div', {class: 'board-tools flex-menu'}, this.domNode);
+   
     
-    super._buildContainer();
-    console.log(styles)
-    this._canvasContainer = createElement('canvas', {class: styles.boardCanvas});
-    this.domNode.appendChild(this._canvasContainer);
-    //addCanvas();
+    return this.domNode;
+   
   }
 
+  /*
+  * Overrides _startup Hook
+  */
   _startup(){
     super._startup();
-    //create context
+    //create context needed for canvas
     this._context = this._canvasContainer.getContext('2d');
-    console.log(`board startup: ${this._context}`)
+
     //create palette
+    this.toolsPalette = new ToolsPalette(this._toolsContainer, this._context, this.brushes).init();
+ 
     //add listeners
   }
 }
