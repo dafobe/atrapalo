@@ -2,6 +2,7 @@ import {default as WidgetBase,
         createElement, 
         addAttributeToElement,
         buildNode,
+        buildIconButton,
         getScreenWidth,
         getScreenHeight} from '../../common/widgetBase';
 
@@ -28,7 +29,8 @@ export default class ToolsPalette extends WidgetBase{
     this.domNode = super._buildContainer();
    
     this.historyPanel.domNode = buildNode('div', {class: 'flex-item board-tools-history'}, this.domNode);
-    this.historyPanel.redo = buildNode('div', {class: 'button--prev'}, this.historyPanel.domNode);
+    this.historyPanel.redo = buildIconButton('mood', {class: 'flex-item board-tools-history'}, this.domNode);
+    /*this.historyPanel.redo = buildNode('div', {class: 'button--prev'}, this.historyPanel.domNode);*/
     this.historyPanel.redo = buildNode('div', {class: 'button--next'}, this.historyPanel.domNode);
 
     this.brushesPanel.domNode = buildNode('div', {class: 'flex-item board-tools--brushes'}, this.domNode);

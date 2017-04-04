@@ -1,3 +1,4 @@
+import {iconToggle} from 'material-components-web';
 /**
 This generic class defines the lifeCycle of the components
 
@@ -43,6 +44,14 @@ export const buildNode = function(type, attributes, container){
   container && container.appendChild(element);
   
   return element;
+}
+
+export const buildIconButton = function(type, attributes, container){
+  const button = buildNode('button', {class: 'mdl-button mdl-js-button mdl-button--icon'});
+  const icon = buildNode('i', {class: 'material-icons', innerText: type}, button);
+  container && container.appendChild(button);
+  
+  return button;
 }
 
 export const getContainerNode = function(container){

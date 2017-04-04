@@ -1,44 +1,66 @@
-@import '~normalize.css';
-
-@color-black: #000000;
-
 /*
-.flex-menu{
+  import colors, fonts and normalize
+*/
+@import "../../common/assets/base";
+
+.board-container{
+  height: 80vh;
+
   display: flex;
   flex-flow:  row wrap;
-  justify-content: space-around;
-}
-
-.flex-item{
-  flex: 0 1 100%;
-  background: yellow;
-}
-*/
-.board-container{
-  flex-flow:  row wrap;
-  height: 200px;
+  justify-content: space-between;
 }
 .board-canvas-container{
+  display: flex;
   flex: 0 1 60%;
+  position: relative;
   
 }
 .board-canvas{
- height: 100%;
- background: @color-black;
+  flex: 1 1 auto;
+    
+  border: solid 1px @color-black;
+}
+
+.flex-menu{
+  display: flex;
+  flex-flow:  column wrap;
+  justify-content: flex-start;
+}
+
+.flex-item{
+  flex: 1 0 auto;
+  background: yellow;
+  border: solid 1px black;
 }
 
 .board-tools{
-  flex: 0 1 40%;
+  flex: 0 1 35%;
   height: 100%;
   background: yellow;
 }
 
 .board-tools-history{
-  width: 100%;
+  flex: 0 1 15%;
+  text-align: center;
 }
+
+.button--prev{
+  display: inline-block;
+  border: solid 1px red;
+  height: 100%;
+  width: 40%;
+}
+.button--next{
+  display: inline-block;
+  border: solid 1px red;
+  height: 100%;
+  width: 40%;
+}
+
 .board-tools-brushes{
-  width: 100%;
+  /*width: 100%;*/
 }
 .board-tools-styles{
-  width: 100%;
+  /*width: 100%;*/
 }
