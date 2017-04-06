@@ -1,4 +1,5 @@
-import {iconToggle} from 'material-components-web';
+import {default as MaterialComponent} from './materialDesignComponent';
+
 /**
 This generic class defines the lifeCycle of the components
 
@@ -7,7 +8,6 @@ This generic class defines the lifeCycle of the components
   init: start the widget
 
 */
-
 export default class WidgetBase {
   constructor (container) {
     //console.log(`WidgetBase constructor: ${container}`);
@@ -15,9 +15,10 @@ export default class WidgetBase {
     this.domNode;
   }
 
-  _buildContainer() {
-    //console.log(`WidgetBase _buildContainer: ${this._domContainer}`)
-    this.domNode = getContainerNode(this._domContainer);
+  _buildContainer(container = this._domContainer) {
+    //console.log(`WidgetBase _buildContainer: ${container}`);
+    this._domContainer = container;
+    this.domNode = getContainerNode(container) || buildNode('div', {});
 
     if(!this.domNode){
       throw Error(`Container ${this._domContainer} not valid`)
@@ -27,15 +28,23 @@ export default class WidgetBase {
   }
   
   _startup(){
-    //console.log('WidgetBase: _startup');
-    //create context
-    //create palette
+    return this;
+  }
+
+  destroy(){
+    removeChildNodes(this.domNode);
+    removeNode(this.domNode);
   }
 
   init(){
     //console.log('WidgetBase: init');
     this._buildContainer();
     this._startup();
+    return this;
+  }
+
+  placeTo(container){
+    container && container.appendChild(this.domNode);
   }
 }
 
@@ -46,12 +55,19 @@ export const buildNode = function(type, attributes, container){
   return element;
 }
 
-export const buildIconButton = function(type, attributes, container){
-  const button = buildNode('button', {class: 'mdl-button mdl-js-button mdl-button--icon'});
-  const icon = buildNode('i', {class: 'material-icons', innerText: type}, button);
-  container && container.appendChild(button);
+export const buildButton = function(type, attributes = {}, container){
   
-  return button;
+  const button = buildNode('button', attributes, container);
+  //const icon = buildNode('i',{}, button);
+  attributes.label && (button.innerText = attributes.label)
+  //icon.innerHTML = 'favorite';
+  //const icon = buildNode('i', {class: 'material-icons', innerText: type}, button);
+
+  container && container.appendChild(button);
+
+  //MaterialComponent(icon)('icon');
+
+  return MaterialComponent(button)('button');
 }
 
 export const getContainerNode = function(container){
@@ -80,4 +96,19 @@ export const getScreenWidth = function (){
 
 export const getScreenHeight = function (){
   return window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+}
+
+export const removeChildNodes = function (node){
+  while (node.firstChild) {
+      node.removeChild(node.firstChild);
+  }
+  return node;
+}
+
+export const removeNode = function (node){
+  let parent = node.parentNode;
+  
+  parent && parent.removeChild(node);
+  
+  return parent;
 }

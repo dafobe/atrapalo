@@ -7,7 +7,7 @@ const extractCommons = new webpack.optimize.CommonsChunkPlugin({
   filename: 'commons.js'
 })
 
-const extractCSS = new ExtractTextPlugin('[name].css');
+const extractLESS = new ExtractTextPlugin('[name].css');
 
 const sourcePath = path.resolve(__dirname, 'src');
 const distPath = path.resolve(__dirname, 'public');
@@ -32,7 +32,7 @@ const config = {
       {
         test: /\.less$/,
         include: sourcePath,
-        use: extractCSS.extract({
+        use: extractLESS.extract({
           fallback: 'style-loader',
           use: ['css-loader', 'less-loader']
         })
@@ -43,6 +43,10 @@ const config = {
           loader: 'babel-loader',
           options: { presets: ['es2015'] }
         }]
+      },{
+          test: /\.(eot|woff|woff2|svg|ttf)([\?]?.*)$/,
+          include: sourcePath,
+          use: ['file-loader']
       }]
   },
   watch: true,
@@ -51,7 +55,7 @@ const config = {
   },
   plugins: [
     new webpack.NamedModulesPlugin(),
-    extractCSS,
+    extractLESS,
     extractCommons
   ]
 }

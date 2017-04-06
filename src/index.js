@@ -5,18 +5,17 @@ if (module.hot) {
 
 import Layout from './layout';
 import {Board} from './board';
-import {Brush, Factory as BrushFactory} from './brushes';
+import {Factory} from './brushes';
 
 //add canvas to layout
 //add brushes to canvas
 
 //init application
-
-
 const name = `Atrapalo`;
-
+const brushFactory = new Factory();
 console.log(`application ${name} entrypoint 2`);
 
-const blackboard = new Board('paint_container');
+const brushes = [brushFactory.getInstance('simpleBrush')];
+const blackboard = new Board('paint_container', brushes);
 
 blackboard.init();
