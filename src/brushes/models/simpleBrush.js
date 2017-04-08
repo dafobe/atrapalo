@@ -5,11 +5,18 @@ const BRUSH_COLOR = '#000000';
 
 const colors = {type: 'strokeStyle',
                 label: 'Brush Color',
-                values: ['#00CC99', '#000000']}
+                values: [ {value: '#000223', iconClass: 'brush-style-color brush-style-color--c1'}, 
+                          {value: 'blue', iconClass: 'brush-style-color brush-style-color--blue'},
+                          {value: 'black', iconClass: 'brush-style-color brush-style-color--black'}
+                        ]}
 
 const sizes = { type: 'lineWidth', 
                 label: 'Brush Size',
-                values: [1, 5, 10, 15]}
+                values: [{value: 1, iconClass: 'brush-style-icon__size--s', sampleClass: 'brush-style-sample__size--s'},
+                          {value: 5, iconClass: 'brush-style-icon__size--m', sampleClass: 'brush-style-sample__size--m'},
+                          {value: 10, iconClass: 'brush-style-icon__size--l', sampleClass: 'brush-style-sample__size--l'},
+                          {value: 15, iconClass: 'brush-style-icon__size--xl', sampleClass: 'brush-style-sample__size--xl'}
+                ]}
 
 const defaultAllowedStyles = [colors, sizes];
 
@@ -23,41 +30,47 @@ export default class SimpleBrush extends Brush{
 
     this.lineJoin = 'round';
     this.lineCap = 'round';
-
-
   }
 
   /*
     Hooks to implement by customized brushes
   */
   paint(context, position){
-console.log('Brush Paint', context, position, this);
+    //console.log('SimpleBrush Paint', context, position, this);
 
     super.paint(context, position);
     context.moveTo(position.x, position.y)
     context.lineTo(position.x, position.y);
+    context.stroke();
     //context.closePath();
     //context.stroke();
   }
   
   startPaint(context, position){ 
     super.startPaint(context, position);
-    context.beginPath();
-    context.moveTo(position.x, position.y);
-
+    
     context.lineWidth = this.lineWidth;
     context.strokeStyle = this.strokeStyle;
     context.lineJoin = this.lineJoin;
     context.lineCap = this.lineCap;
 
-    /*context.strokeStyle = "#df4b26";
-    context.lineJoin = "round";
-    context.lineWidth = 5;*/
+    context.beginPath();
+    context.moveTo(position.x, position.y);
+    context.stroke();
+
   }
 
   stopPaint(context){
     super.stopPaint(context);
     context.closePath();
-    context.stroke();
+  }
+
+  getContextStyles(){
+    const styles = {  lineWidth: this.lineWidth , 
+                      strokeStyle: this.strokeStyle , 
+                      lineJoin: this.lineJoin ,
+                      lineCap: this.lineCap};
+    
+    return styles
   }
 }

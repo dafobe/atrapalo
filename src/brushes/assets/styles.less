@@ -1,5 +1,6 @@
 
 @import "../../common/assets/base";
+@import "./customBrushesStyles";
 
 .brush{
 
@@ -14,13 +15,32 @@
 }
 
 .brush-styles-group{
-
+	position: relative;
+	border: solid 2px red;
 }
 
-.brush-styles-group--simple{
-
+.brush-styles-group label{
+	display: block;
 }
 
-.brush-styles-group--complex{
+.brush-styles-style--simple{
+	display: inline-block;
+}
 
+.brush-styles-style{
+	height: 40px;
+	border: solid 1px black;
+}
+
+.brush-styles-style_icon{
+	display: inline-block;
+	height: 40px;
+	width: 40px;
+	border: solid 1px black;
+}
+.brush-styles-style_sample{
+	display: inline-block;
+	height: 100%;
+	width: 60%;
+	border: solid 1px black;
 }

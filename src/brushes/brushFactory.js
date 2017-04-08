@@ -16,7 +16,7 @@ export default class BrushFactory{
 					this.brushClass = SimpleBrush;
 			default: 
 		}
-		console.log('BrushFactory: ',type, ...props)
+		
 		return new this.brushClass(...props);
 	}
 }

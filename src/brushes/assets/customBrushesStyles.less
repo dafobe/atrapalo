@@ -1,0 +1,40 @@
+@brushStyle-black: black;
+@brushStyle-red: red;
+@brushStyle-blue: blue;
+@brushStyle-yellow: yellow;
+@c1: #000223;
+
+.brush-style-color{
+    
+
+    &.brush-style-color--black{
+ 
+      background: @brushStyle-black;
+    }
+
+    &.brush-style-color--blue{
+      background: @brushStyle-blue;
+    }
+
+    &.brush-style-color--c1{
+      background: @c1;
+    }
+}
+
+.brush-style-icon__size--s{
+  &:before{
+    background-color: rgba(0, 0, 0, 0.06);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -webkit-transition: opacity 250ms linear;
+    transition: opacity 250ms linear;
+    border-radius: 50%;
+    pointer-events: none;
+    content: "Small";
+  }
+}
+
+

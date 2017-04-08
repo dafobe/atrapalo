@@ -10,6 +10,9 @@ import {default as WidgetBase,
 
 import ToolsPalette from './toolsPalette';
 
+const canvasMouseProps = {};
+const history = [];
+
 export default class Board extends WidgetBase{
   constructor (container, brushes = []) {
     super(container);
@@ -35,7 +38,7 @@ export default class Board extends WidgetBase{
     this.domNode = super._buildContainer();
 
     const canvasWrapper = buildNode('div', {class: 'board-canvas-container'}, this.domNode);
-
+    this.canvas.parentNode = canvasWrapper;
     this.canvas.domNode = buildNode('canvas', {class: 'board-canvas'}, canvasWrapper);
     this._toolsContainer = buildNode('div', {class: 'board-tools flex-menu'}, this.domNode);
     
@@ -58,47 +61,63 @@ export default class Board extends WidgetBase{
      //init Listeners
     this.canvas.domNode.addEventListener('mousedown', this._onStartDraw, false);
     this.canvas.domNode.addEventListener('mouseup', this._onStopDraw, false);
+    this.canvas.domNode.addEventListener('mouseout', this._onStopDraw, false);
   }
 
-  
+  init(){
+    super.init();
+    setupCanvasMouse(this.canvas.domNode);
+  }
 
   onStartDraw(event){
-    console.log('BOARD startDraw calling brush start paint')
-
     if(!this.toolsPalette.activeBrush){
       console.log('Ops, Please select first an Brush to paint ');
       return
     }
-
-    this.toolsPalette.activeBrush.startPaint(this._context, getPosition(event, this.canvas.domNode));
+    
+    this.toolsPalette.activeBrush.startPaint(this._context, getPosition(event));
 
     //add listener to print
     this.canvas.domNode.addEventListener('mousemove',this._onDraw , false);
   }
 
   onDraw(event){
-    console.log('BOARD onDraw calling brush paint');
+    //console.log('BOARD onDraw calling brush paint');
 
-    this.toolsPalette.activeBrush.paint(this._context, getPosition(event, this.canvas.domNode));
+    this.toolsPalette.activeBrush.paint(this._context, getPosition(event));
   }
 
   onStopDraw(event){
-    console.log('BOARD stopDraw calling brush paint');
+    //console.log('BOARD stopDraw calling brush paint');
 
-    this.toolsPalette.activeBrush.stopPaint(this._context, getPosition(event, this.canvas.domNode));
+    if(!this.toolsPalette.activeBrush){
+      return
+    }
+
+    this.toolsPalette.activeBrush.stopPaint(this._context, getPosition(event));
+    
     this.canvas.domNode.removeEventListener('mousemove', this._onDraw, false);
+
+    this.saveHistory();
   }
   
 
   saveHistory(){
-    //call context save
-    //remove drawListeners
+    this._context.save();
   }
 
 }
 
-const getPosition = function (event, container){
-  const x = event.pageX - container.offsetLeft;
-  const y = event.pageY - container.offsetTop;
+const setupCanvasMouse = function(canvas){
+   let rect = canvas.getBoundingClientRect();
+  canvasMouseProps.rectLeft = rect.left;
+  canvasMouseProps.rectTop = rect.top;
+  canvasMouseProps.cssScaleX = canvas.width / canvas.offsetWidth;
+  canvasMouseProps.cssScaleY = canvas.height / canvas.offsetHeight;
+}
+
+const getPosition = function (event){
+  const x = (event.clientX - canvasMouseProps.rectLeft) * canvasMouseProps.cssScaleX;
+  const y = (event.clientY - canvasMouseProps.rectTop) * canvasMouseProps.cssScaleY;
   return {x, y}
 }

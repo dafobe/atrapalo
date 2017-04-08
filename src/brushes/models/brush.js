@@ -1,3 +1,4 @@
+import styles from '../assets/styles.less';
 
 import {default as WidgetBase,
         buildNode} from '../../common/widgetBase';
@@ -7,7 +8,7 @@ const BRUSH_COLOR = '#00CC99';
 
 
 export default class Brush extends WidgetBase{
-  constructor (container, name = 'Brush', stylesStore = [], onSelectBrush, onPaint) {
+  constructor (container, name = 'Brush', stylesStore = [], onSelectBrush, onStartPaint, onPaint, onStopPaint) {
     super(container);
   
     this.name = name;
@@ -23,7 +24,9 @@ export default class Brush extends WidgetBase{
     this._sample;
 
     this.onSelectBrush = onSelectBrush;
+    this.onStartPaint = onStartPaint;
     this.onPaint = onPaint;
+    this.onStopPaint = onStopPaint;
   }
 
   _buildContainer(){
@@ -51,9 +54,7 @@ export default class Brush extends WidgetBase{
   }
 
   _updateBrushStyle(style, value){
-    console.log(`--- Brush _updateBrushStyle ${style} ${value}`)
     this[style] = value;
-    console.log(`--- Brush _updateBrushStyle after update`, this)
   }
   
   setSelected(){
@@ -63,28 +64,35 @@ export default class Brush extends WidgetBase{
 
     this.isSelected = true;
     this.onSelectBrush && this.onSelectBrush(this);
-    console.log(`Brush ${this.name} has been selected`);
   }
 
   _selectBrushHandler(event){
-    console.log(`selected Brush ${this.name}`, this)
-
     this.setSelected();
+  }
+
+  getContextStyles(){
+    return {  
+              lineWidth: this.lineWidth,
+              strokeStyle: this.strokeStyle
+            }
   }
 
   /*
     Hooks to implement by customized brushes
   */
   paint(context, position = {x: 0, y: 0}){
-    console.log(`Brush ${this.name} is Painting`, position);
+    this.onPaint && this.onPaint(position);
+    //console.log(`Brush ${this.name} is Painting`, position);
   }
   
-  startPaint(context, position = {x: 0, y: 0}){ 
-    console.log(`Brush ${this.name} is Starting to Paint`, position);
+  startPaint(context, position = {x: 0, y: 0}){
+    this.onStartPaint && this.onStartPaint(position);
+    //console.log(`Brush ${this.name} is Starting to Paint`, position);
   }
 
   stopPaint(context){ 
-    console.log(`Brush ${this.name} has Stopped Painting`);
+    this.onStopPaint && this.onStopPaint();
+   // console.log(`Brush ${this.name} has Stopped Painting`);
   }
 }
 
@@ -102,16 +110,35 @@ class BrushDrawingStyles extends WidgetBase{
   }
 
   _buildContainer(){
-    this.domNode = buildNode('fieldset', {class: 'brush-styles-group'});
+    let label;
+
+    this.domNode = buildNode('section', {class: 'brush-styles-group'});
+    
+    if(this.label){
+      label = buildNode('label');
+      label.innerText = this.label;
+      this.domNode.appendChild(label);
+    }
+
+    
     return this.domNode;
   }
   
   _startup(){
-    this.styles = this.store.map( (style) => new BrushStyle(this.domNode, this.type, style, (type, value) => this._updateStyleBrush(type, value))).map( (brushStyle) => brushStyle.init())
+    this.styles = this.store.map( (style) => new BrushStyle(null, 
+                                                            this.type, 
+                                                            style.value, 
+                                                            (type, value) => this._updateStyleBrush(type, value),
+                                                            style.iconClass,
+                                                            style.sampleClass
+                                                            ))
+                            .map( (brushStyle) => brushStyle.init());
+
+    this.styles.forEach(style => style.placeTo(this.domNode));
   }
 
   _updateStyleBrush(type, value){
-    console.log(`BrushDrawingStyles _updateStyleBrush: ${type}, ${value}`, this);
+    //console.log(`BrushDrawingStyles _updateStyleBrush: ${type}, ${value}`, this);
     this.updateStyleHandler && this.updateStyleHandler(type, value);
   }
 }
@@ -127,28 +154,41 @@ class BrushStyle extends WidgetBase{
     this.onSelectHandler = onSelectHandler;
   }
   _buildContainer(){
-    this.domNode = super._buildContainer();
-    let container = buildNode('div', {class: 'brush-styles-style'}, this.domNode);
+    
+    let container = buildNode('fieldset', {class: 'brush-styles-style'}),
+        icon,
+        sample;
 
     if(this.icon){
-      buildNode('div', {class: 'brush-styles-style_icon'}, container);
+      //icon = buildNode('span', {class: `brush-styles-style_icon ${this.icon}`});
+      icon = buildNode('span', {class: `mdc-fab mdc-fab--mini mdc-fab--plain ${this.icon}`});
+      
+      container.appendChild(icon);
     }
 
     if(this.sample){
-      buildNode('div', {class: 'brush-styles-style_sample'}, container);
+      sample = buildNode('span', {class: `brush-styles-style_sample ${this.sample}`});
+      container.appendChild(sample);
     }
 
+    if(!this.sample){
+      container.classList.add('brush-styles-style--simple');
+    }
+
+    this.domNode = container;
+    
     return this.domNode;
   }
    _startup(){
     super._startup();
 
-    //init Listeners
+    //BrushStyle init Listeners
+    //console.log('BrushStyle init Listeners', this.domNode);
     this.domNode.addEventListener('click', event => this._onSelectStyleHandler(event), false);
   }
 
   _onSelectStyleHandler(event){
-    console.log(`BrushStyle _onSelectStyleHandler: ${this.type}, ${this.value}`);
+   // console.log(`BrushStyle _onSelectStyleHandler: ${this.type}, ${this.value}`);
     this.onSelectHandler && this.onSelectHandler(this.type, this.value);
   }
 }
