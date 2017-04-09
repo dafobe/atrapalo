@@ -1,7 +1,7 @@
 /*
   import colors, fonts and normalize
 */
-@import "../../common/assets/base";
+@import '../../common/assets/base';
 
 .board-container{
   height: 80vh;
@@ -19,7 +19,7 @@
 .board-canvas{
   flex: 1 1 auto;
     
-  border: solid 1px @color-black;
+  border: solid 1px #c1c1c1;
 }
 
 .flex-menu{
@@ -30,30 +30,43 @@
 
 .flex-item{
   flex: 1 0 auto;
-  background: yellow;
-  border: solid 1px black;
+  margin-bottom: 20px;
 }
 
 .board-tools{
   flex: 0 1 35%;
-  height: 100%;
-  background: yellow;
+}
+
+.board-tools__header{
+  background: @atrapalo-red;
+}
+
+.board-tools__header--title{
+  font-size: 1.1rem;
+  color: @atrapalo-white;
 }
 
 .board-tools-history{
-  flex: 0 1 15%;
+  
+}
+
+.button__container{
+  flex: 1 1 auto;
+}
+
+.button__container-button{
+  flex: 1 1 auto;
   text-align: center;
 }
 
 .button--redo{
   display: inline-block;
-  height: 100%;
-  width: 40%;
+  
+  background-color: @atrapalo-red;
 }
 .button--undo{
   display: inline-block;
-  height: 100%;
-  width: 40%;
+  background-color: @atrapalo-red;
 }
 
 .board-tools-brushes{
@@ -61,4 +74,31 @@
 }
 .board-tools-styles{
   /*width: 100%;*/
+}
+
+/* === Desktop === */
+@media @smartphones{
+  .board-container{
+    height: 40vh;
+    flex-flow:  column;
+
+  }
+  .board-canvas-container{
+    flex: 1 0 100%;
+    margin: 15px 0;
+  }
+  .board-tools{
+    flex: 1 0 100%;
+  }
+  .board-tools__header{
+    padding: 5px;
+  }
+
+  .button--undo{
+    margin: 0 0;
+  }
+
+  .flex-item{
+    
+  }
 }

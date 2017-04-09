@@ -1,5 +1,4 @@
-
-@import "../../common/assets/base";
+@import '../../common/assets/base';
 @import "./customBrushesStyles";
 
 .brush{
@@ -7,7 +6,15 @@
 }
 
 .brush-label{
-
+	font-family: Roboto,sans-serif;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	font-size: .875rem;
+	font-weight: 500;
+	letter-spacing: .04em;
+	line-height: 1.5rem;
+	color: rgba(0, 0, 0, 0.87);
+	color: var(--mdc-theme-text-primary-on-background, rgba(0, 0, 0, 0.87));
 }
 
 .brush-sample{
@@ -16,11 +23,19 @@
 
 .brush-styles-group{
 	position: relative;
-	border: solid 2px red;
 }
 
 .brush-styles-group label{
 	display: block;
+	font-family: Roboto,sans-serif;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	font-size: .875rem;
+	font-weight: 500;
+	letter-spacing: .04em;
+	line-height: 1.5rem;
+	color: rgba(0, 0, 0, 0.87);
+	color: var(--mdc-theme-text-primary-on-background, rgba(0, 0, 0, 0.87));
 }
 
 .brush-styles-style--simple{
@@ -28,19 +43,28 @@
 }
 
 .brush-styles-style{
-	height: 40px;
-	border: solid 1px black;
+	margin: 0 2px 5px 2px;
+	position: relative;
 }
 
 .brush-styles-style_icon{
 	display: inline-block;
 	height: 40px;
 	width: 40px;
+	margin-right: 10px;
 	border: solid 1px black;
+	background: @atrapalo-red;
 }
+
+.brush-styles-style_icon:disabled {
+    opacity: 0.8;
+    color: rgba(0, 0, 0, 0.26);
+    cursor: default;
+    pointer-events: none;
+}
+
 .brush-styles-style_sample{
-	display: inline-block;
-	height: 100%;
+	position: absolute;
+	top: 50%;
 	width: 60%;
-	border: solid 1px black;
 }

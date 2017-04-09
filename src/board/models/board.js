@@ -1,10 +1,10 @@
 import styles from '../assets/styles.less';
 
-
 import {default as WidgetBase, 
         createElement, 
         addAttributeToElement,
         buildNode,
+        buildCard,
         getScreenWidth,
         getScreenHeight} from '../../common/widgetBase';
 
@@ -37,7 +37,7 @@ export default class Board extends WidgetBase{
   _buildContainer() {
     this.domNode = super._buildContainer();
 
-    const canvasWrapper = buildNode('div', {class: 'board-canvas-container'}, this.domNode);
+    const canvasWrapper = buildCard({class: 'board-canvas-container'}, this.domNode);
     this.canvas.parentNode = canvasWrapper;
     this.canvas.domNode = buildNode('canvas', {class: 'board-canvas'}, canvasWrapper);
     this._toolsContainer = buildNode('div', {class: 'board-tools flex-menu'}, this.domNode);
@@ -62,6 +62,11 @@ export default class Board extends WidgetBase{
     this.canvas.domNode.addEventListener('mousedown', this._onStartDraw, false);
     this.canvas.domNode.addEventListener('mouseup', this._onStopDraw, false);
     this.canvas.domNode.addEventListener('mouseout', this._onStopDraw, false);
+
+    this.canvas.domNode.addEventListener('touchstart', this._onStartDraw, false);
+    this.canvas.domNode.addEventListener('touchend', this._onStopDraw, false);
+
+    window.addEventListener('scroll', () => this.recalcCanvasMouse(), false);
   }
 
   init(){
@@ -74,15 +79,24 @@ export default class Board extends WidgetBase{
       console.log('Ops, Please select first an Brush to paint ');
       return
     }
-    
+
+    if (event.target == this._context.canvas) {
+      event.preventDefault();
+    }
+
     this.toolsPalette.activeBrush.startPaint(this._context, getPosition(event));
 
     //add listener to print
     this.canvas.domNode.addEventListener('mousemove',this._onDraw , false);
+    this.canvas.domNode.addEventListener('touchmove', this._onDraw, false);
   }
 
   onDraw(event){
-    //console.log('BOARD onDraw calling brush paint');
+    console.log('BOARD onDraw calling brush paint');
+
+    if (event.target == this._context.canvas) {
+      event.preventDefault();
+    }
 
     this.toolsPalette.activeBrush.paint(this._context, getPosition(event));
   }
@@ -94,7 +108,11 @@ export default class Board extends WidgetBase{
       return
     }
 
-    this.toolsPalette.activeBrush.stopPaint(this._context, getPosition(event));
+    if (event.target == this._context.canvas) {
+      event.preventDefault();
+    }
+
+    this.toolsPalette.activeBrush.stopPaint(this._context);
     
     this.canvas.domNode.removeEventListener('mousemove', this._onDraw, false);
 
@@ -106,6 +124,9 @@ export default class Board extends WidgetBase{
     this._context.save();
   }
 
+  recalcCanvasMouse(){
+    setupCanvasMouse(this._context.canvas);
+  }
 }
 
 const setupCanvasMouse = function(canvas){
@@ -117,7 +138,10 @@ const setupCanvasMouse = function(canvas){
 }
 
 const getPosition = function (event){
-  const x = (event.clientX - canvasMouseProps.rectLeft) * canvasMouseProps.cssScaleX;
-  const y = (event.clientY - canvasMouseProps.rectTop) * canvasMouseProps.cssScaleY;
+  let clientX = (event.touches && event.touches[0].clientX) || event.clientX,
+      clientY = (event.touches && event.touches[0].clientY) || event.clientY;
+
+  const x = (clientX - canvasMouseProps.rectLeft) * canvasMouseProps.cssScaleX;
+  const y = (clientY - canvasMouseProps.rectTop) * canvasMouseProps.cssScaleY;
   return {x, y}
 }

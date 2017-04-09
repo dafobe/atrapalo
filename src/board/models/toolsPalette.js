@@ -1,5 +1,7 @@
 import {default as WidgetBase, 
         buildNode,
+        buildCard,
+        buildCardAction,
         buildButton} from '../../common/widgetBase';
 
 const redoHistory = [];
@@ -31,16 +33,21 @@ export default class ToolsPalette extends WidgetBase{
     
     this.domNode = super._buildContainer();
    
-    this.historyPanel.domNode = buildNode('fieldset', {class: 'flex-item board-tools-history'}, this.domNode);
-    this.historyPanel.undo = buildButton('undo', {class: 'button--undo', label: 'undo'}, this.historyPanel.domNode);
-    this.historyPanel.redo = buildButton('redo', {class: 'button--redo', label: 'redo'}, this.historyPanel.domNode);
+    this.historyPanel.domNode = buildCard({class: 'flex-item board-tools-history', title: 'Undo/Redo'}, this.domNode);
+    this.historyPanel.buttonsContainer = buildCardAction({class: 'button__container'},this.historyPanel.domNode);
+    this.historyPanel.undo = buildNode('div', {class: 'button__container-button'});
+    this.historyPanel.redo = buildNode('div', {class: 'button__container-button'});
+    this.historyPanel.buttonsContainer.appendChild(this.historyPanel.undo);
+    this.historyPanel.buttonsContainer.appendChild(this.historyPanel.redo);
+    buildButton('undo', {class: 'button--undo', label: '<'}, this.historyPanel.undo);
+    buildButton('redo', {class: 'button--redo', label: '>'}, this.historyPanel.redo);
 
-    this.brushesPanel.domNode = buildNode('fieldset', {class: 'flex-item board-tools--brushes'}, this.domNode);
+    this.brushesPanel.domNode = buildCard({class: 'flex-item board-tools--brushes', title: 'Brushes'}, this.domNode);
     this.brushes.forEach( (brush) => {
       this.brushesPanel.domNode.appendChild(brush.domNode);
     })
 
-    this.stylesPanel.domNode = buildNode('fieldset', {class: 'flex-item board-tools-styles'}, this.domNode);
+    this.stylesPanel.domNode = buildCard({class: 'flex-item board-tools-styles', title: 'Styles'}, this.domNode);
     //this.activeBrush && this.
 
     return this.domNode;

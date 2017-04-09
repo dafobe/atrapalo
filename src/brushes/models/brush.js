@@ -1,6 +1,7 @@
 import styles from '../assets/styles.less';
 
 import {default as WidgetBase,
+        buildButton,
         buildNode} from '../../common/widgetBase';
 
 const BRUSH_WIDTH = 5;
@@ -112,7 +113,7 @@ class BrushDrawingStyles extends WidgetBase{
   _buildContainer(){
     let label;
 
-    this.domNode = buildNode('section', {class: 'brush-styles-group'});
+    this.domNode = buildNode('div', {class: 'brush-styles-group'});
     
     if(this.label){
       label = buildNode('label');
@@ -130,6 +131,7 @@ class BrushDrawingStyles extends WidgetBase{
                                                             style.value, 
                                                             (type, value) => this._updateStyleBrush(type, value),
                                                             style.iconClass,
+                                                            style.iconText,
                                                             style.sampleClass
                                                             ))
                             .map( (brushStyle) => brushStyle.init());
@@ -138,33 +140,48 @@ class BrushDrawingStyles extends WidgetBase{
   }
 
   _updateStyleBrush(type, value){
-    //console.log(`BrushDrawingStyles _updateStyleBrush: ${type}, ${value}`, this);
+    //call callback
     this.updateStyleHandler && this.updateStyleHandler(type, value);
+
+    //enable other styles
+    let filtered = this.styles.filter(style => style.value != value)
+                              .map(style => style.disabled = false);
   }
 }
 
 class BrushStyle extends WidgetBase{
-  constructor (container, type, value, onSelectHandler, icon, sample) {
+  constructor (container, type, value, onSelectHandler, icon, iconText, sample) {
     super(container);
     this.type = type;
     this.value = value;
     this.icon = icon;
+    this.iconText = iconText;
     this.sample = sample;
+    this._iconContainer;
+    this._disabled = false;
 
     this.onSelectHandler = onSelectHandler;
   }
   _buildContainer(){
     
-    let container = buildNode('fieldset', {class: 'brush-styles-style'}),
+    let container = buildNode('div', {class: 'brush-styles-style'}),
         icon,
         sample;
 
     if(this.icon){
-      //icon = buildNode('span', {class: `brush-styles-style_icon ${this.icon}`});
-      icon = buildNode('span', {class: `mdc-fab mdc-fab--mini mdc-fab--plain ${this.icon}`});
-      
+      icon = buildButton('span', {class: `brush-styles-style_icon ${this.icon}`});
       container.appendChild(icon);
     }
+
+    if(this.iconText){
+      if(!icon){
+        icon = buildButton('span', {class: `brush-styles-style_icon`});
+        container.appendChild(icon);
+      }
+      icon.innerHTML = this.iconText;
+    }
+
+    this._iconContainer = icon;
 
     if(this.sample){
       sample = buildNode('span', {class: `brush-styles-style_sample ${this.sample}`});
@@ -189,6 +206,20 @@ class BrushStyle extends WidgetBase{
 
   _onSelectStyleHandler(event){
    // console.log(`BrushStyle _onSelectStyleHandler: ${this.type}, ${this.value}`);
+    this.disabled = true;
     this.onSelectHandler && this.onSelectHandler(this.type, this.value);
+  }
+  
+  get disabled() {
+      return this._disabled;
+  }
+
+  set disabled(disabled) {
+      if(this._disabled === disabled){
+        return;
+      }
+
+      this._iconContainer.disabled = disabled;
+      this._disabled = disabled;
   }
 }

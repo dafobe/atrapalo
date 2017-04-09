@@ -12,10 +12,10 @@ const colors = {type: 'strokeStyle',
 
 const sizes = { type: 'lineWidth', 
                 label: 'Brush Size',
-                values: [{value: 1, iconClass: 'brush-style-icon__size--s', sampleClass: 'brush-style-sample__size--s'},
-                          {value: 5, iconClass: 'brush-style-icon__size--m', sampleClass: 'brush-style-sample__size--m'},
-                          {value: 10, iconClass: 'brush-style-icon__size--l', sampleClass: 'brush-style-sample__size--l'},
-                          {value: 15, iconClass: 'brush-style-icon__size--xl', sampleClass: 'brush-style-sample__size--xl'}
+                values: [{value: 1, iconText: 'S', sampleClass: 'brush-style-sample__size--s'},
+                          {value: 5, iconText: 'M', sampleClass: 'brush-style-sample__size--m'},
+                          {value: 10, iconText: 'L', sampleClass: 'brush-style-sample__size--l'},
+                          {value: 15, iconText: 'XL', sampleClass: 'brush-style-sample__size--xl'}
                 ]}
 
 const defaultAllowedStyles = [colors, sizes];

@@ -1,8 +1,16 @@
+//import materialStyles from './assets/surfaceCSS/surface_styles.scss';
+import material from './assets/materialDesign.scss';
+
+
+
 const configs = {
-'button': 'mdc-button mdc-js-button mdc-button--fab',
-'button-colored': 'mdc-button--accent',
-'fab': 'mdc-fab material-icons',
-'icon': 'mdc-icon-toggle material-icons mdc-ripple-upgraded mdc-ripple-upgraded--unbounded mdc-ripple-upgraded--foreground-deactivation'
+'button': 'mdc-fab mdc-fab--mini',
+'card': 'mdc-card',
+'card__header': 'mdc-card__primary',
+'card__header--title' : 'mdc-card__title',
+'card__body' : 'mdc-card__supporting-text',
+'card__actions': 'mdc-card__actions'
+
 }
 
 export default function(component){

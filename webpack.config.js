@@ -8,6 +8,7 @@ const extractCommons = new webpack.optimize.CommonsChunkPlugin({
 })
 
 const extractLESS = new ExtractTextPlugin('[name].css');
+const extractVendor = new ExtractTextPlugin('[name].vendor.css');
 
 const sourcePath = path.resolve(__dirname, 'src');
 const distPath = path.resolve(__dirname, 'public');
@@ -23,10 +24,6 @@ const config = {
     publicPath: '/public/',
     filename: '[name].bundle.js'
   },
-
-  /*
-
-  */
   module: {
     rules: [
       {
@@ -35,6 +32,13 @@ const config = {
         use: extractLESS.extract({
           fallback: 'style-loader',
           use: ['css-loader', 'less-loader']
+        })
+      },{
+        test: /\.scss$/,
+        include: sourcePath,
+        use: extractVendor.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'sass-loader']
         })
       },{
         test: /\.js$/,
@@ -56,6 +60,7 @@ const config = {
   plugins: [
     new webpack.NamedModulesPlugin(),
     extractLESS,
+    extractVendor,
     extractCommons
   ]
 }

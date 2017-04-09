@@ -58,16 +58,46 @@ export const buildNode = function(type, attributes, container){
 export const buildButton = function(type, attributes = {}, container){
   
   const button = buildNode('button', attributes, container);
-  //const icon = buildNode('i',{}, button);
   attributes.label && (button.innerText = attributes.label)
-  //icon.innerHTML = 'favorite';
-  //const icon = buildNode('i', {class: 'material-icons', innerText: type}, button);
+
 
   container && container.appendChild(button);
 
   //MaterialComponent(icon)('icon');
 
   return MaterialComponent(button)('button');
+}
+
+export const buildCard = function(attributes = {}, container){
+
+let card,
+    cardHeader,
+    cardTitle;
+
+
+  card = buildNode('div', attributes, container);
+
+  if(attributes.title){
+    cardHeader = MaterialComponent(buildNode('section', {class: 'board-tools__header'}))('card__header');
+    card.appendChild(cardHeader);
+
+    cardTitle = MaterialComponent(buildNode('h1', {class: 'board-tools__header--title'}))('card__header--title');
+    cardHeader.appendChild(cardTitle);
+
+    cardTitle.innerText = attributes.title;
+  }
+
+  container && container.appendChild(card);
+
+  return MaterialComponent(card)('card');
+}
+export const buildCardAction = function(attributes = {}, container){
+
+  const action = buildNode('section', attributes);
+
+  container && container.appendChild(action);
+
+  return MaterialComponent(action)('card__actions');
 }
 
 export const getContainerNode = function(container){
