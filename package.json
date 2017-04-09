@@ -7,7 +7,7 @@
     "start": "npm run dev",
     "dev-reload": "webpack-dev-server --host 0.0.0.0 --port 8080 --hot --inline",
     "dev": "webpack-dev-server --host 0.0.0.0 --port 8080",
-    "test": "mocha ./src/**/test/*.js --compilers js:babel-core/register  --recursive",
+    "test": "mocha --require ignore-styles ./src/**/test/*.js --compilers js:babel-core/register  --recursive",
     "test:watch": "npm run test -- --watch",
     "build": "webpack -p"
   },
@@ -22,6 +22,7 @@
     "css-loader": "^0.26.4",
     "extract-text-webpack-plugin": "^2.1.0",
     "file-loader": "^0.11.1",
+    "ignore-styles": "^5.0.1",
     "less": "^2.7.2",
     "less-loader": "^3.0.0",
     "mocha": "^3.2.0",
@@ -39,6 +40,8 @@
     "normalize.css": "^6.0.0"
   },
   "babel": {
-    "presets": ["es2015"]
+    "presets": [
+      "es2015"
+    ]
   }
 }
