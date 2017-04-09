@@ -5,9 +5,29 @@ const BRUSH_COLOR = '#000000';
 
 const colors = {type: 'strokeStyle',
                 label: 'Brush Color',
-                values: [ {value: '#000223', iconClass: 'brush-style-color brush-style-color--c1'}, 
-                          {value: 'blue', iconClass: 'brush-style-color brush-style-color--blue'},
-                          {value: 'black', iconClass: 'brush-style-color brush-style-color--black'}
+                values: [ {value: '#f73e2c', iconClass: 'brush-style-color brush-style-color--c1'},
+                          {value: '#f2035c', iconClass: 'brush-style-color brush-style-color--c2'},
+                          {value: '#9906a5', iconClass: 'brush-style-color brush-style-color--c3'},
+                          {value: '#672ab5', iconClass: 'brush-style-color brush-style-color--c4'},
+                          {value: '#3d4aad', iconClass: 'brush-style-color brush-style-color--c5'},
+
+                          {value: '#43b052', iconClass: 'brush-style-color brush-style-color--c6'},
+                          {value: '#009788', iconClass: 'brush-style-color brush-style-color--c7'},
+                          {value: '#01bbd4', iconClass: 'brush-style-color brush-style-color--c8'},
+                          {value: '#00a4f4', iconClass: 'brush-style-color brush-style-color--c9'},
+                          {value: '#1091ee', iconClass: 'brush-style-color brush-style-color--c10'},
+
+                          {value: '#88c64b', iconClass: 'brush-style-color brush-style-color--c11'},
+                          {value: '#cdde38', iconClass: 'brush-style-color brush-style-color--c12'},
+                          {value: '#feee37', iconClass: 'brush-style-color brush-style-color--c13'},
+                          {value: '#fec224', iconClass: 'brush-style-color brush-style-color--c14'},
+                          {value: '#fd981a', iconClass: 'brush-style-color brush-style-color--c15'},
+
+                          {value: '#000000', iconClass: 'brush-style-color brush-style-color--c16'},
+                          {value: '#5f7c8c', iconClass: 'brush-style-color brush-style-color--c17'},
+                          {value: '#9d9d9d', iconClass: 'brush-style-color brush-style-color--c18'},
+                          {value: '#7a5447', iconClass: 'brush-style-color brush-style-color--c19'},
+                          {value: '#fd540c', iconClass: 'brush-style-color brush-style-color--c20'}
                         ]}
 
 const sizes = { type: 'lineWidth', 

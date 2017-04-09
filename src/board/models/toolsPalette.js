@@ -70,7 +70,6 @@ export default class ToolsPalette extends WidgetBase{
   }
 
   _onRedo(){
-    console.log('Redo', undoHistory, redoHistory);
     let action = redoHistory.pop();
     if(action){
       undoHistory.push(action)
@@ -80,7 +79,6 @@ export default class ToolsPalette extends WidgetBase{
   }
 
   _onUndo(){
-    console.log('Undo', undoHistory, redoHistory);
     let action = undoHistory.pop();
     if(action){
       redoHistory.push(action)
@@ -119,7 +117,6 @@ export default class ToolsPalette extends WidgetBase{
   }
 
   _redraw(historyList = undoHistory){
-    console.log('REdraw History', undoHistory, redoHistory);
     this._resetCanvas();
     historyList.forEach(history => history.paintHistory(this.context));
   }

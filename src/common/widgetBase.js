@@ -10,13 +10,11 @@ This generic class defines the lifeCycle of the components
 */
 export default class WidgetBase {
   constructor (container) {
-    //console.log(`WidgetBase constructor: ${container}`);
     this._domContainer = container;
     this.domNode;
   }
 
   _buildContainer(container = this._domContainer) {
-    //console.log(`WidgetBase _buildContainer: ${container}`);
     this._domContainer = container;
     this.domNode = getContainerNode(container) || buildNode('div', {});
 
@@ -37,7 +35,6 @@ export default class WidgetBase {
   }
 
   init(){
-    //console.log('WidgetBase: init');
     this._buildContainer();
     this._startup();
     return this;
@@ -58,12 +55,9 @@ export const buildNode = function(type, attributes, container){
 export const buildButton = function(type, attributes = {}, container){
   
   const button = buildNode('button', attributes, container);
-  attributes.label && (button.innerText = attributes.label)
-
+  attributes.label && (button.innerText = attributes.label);
 
   container && container.appendChild(button);
-
-  //MaterialComponent(icon)('icon');
 
   return MaterialComponent(button)('button');
 }

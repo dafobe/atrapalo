@@ -88,17 +88,22 @@
     margin: 15px 0;
   }
   .board-tools{
+    flex-flow:  row wrap;
+    justify-content: space-between;
     flex: 1 0 100%;
   }
   .board-tools__header{
     padding: 5px;
   }
-
+  .board-tools-history, .board-tools--brushes{
+    flex: 1 0 40%;
+  }
   .button--undo{
     margin: 0 0;
   }
 
   .flex-item{
-    
+    flex: 0 100%;
+    margin-bottom: 10px;
   }
 }

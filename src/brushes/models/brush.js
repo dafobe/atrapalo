@@ -83,17 +83,14 @@ export default class Brush extends WidgetBase{
   */
   paint(context, position = {x: 0, y: 0}){
     this.onPaint && this.onPaint(position);
-    //console.log(`Brush ${this.name} is Painting`, position);
   }
   
   startPaint(context, position = {x: 0, y: 0}){
     this.onStartPaint && this.onStartPaint(position);
-    //console.log(`Brush ${this.name} is Starting to Paint`, position);
   }
 
   stopPaint(context){ 
     this.onStopPaint && this.onStopPaint();
-   // console.log(`Brush ${this.name} has Stopped Painting`);
   }
 }
 
@@ -200,12 +197,10 @@ class BrushStyle extends WidgetBase{
     super._startup();
 
     //BrushStyle init Listeners
-    //console.log('BrushStyle init Listeners', this.domNode);
     this.domNode.addEventListener('click', event => this._onSelectStyleHandler(event), false);
   }
 
   _onSelectStyleHandler(event){
-   // console.log(`BrushStyle _onSelectStyleHandler: ${this.type}, ${this.value}`);
     this.disabled = true;
     this.onSelectHandler && this.onSelectHandler(this.type, this.value);
   }

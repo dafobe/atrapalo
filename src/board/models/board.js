@@ -92,8 +92,6 @@ export default class Board extends WidgetBase{
   }
 
   onDraw(event){
-    console.log('BOARD onDraw calling brush paint');
-
     if (event.target == this._context.canvas) {
       event.preventDefault();
     }
@@ -102,8 +100,6 @@ export default class Board extends WidgetBase{
   }
 
   onStopDraw(event){
-    //console.log('BOARD stopDraw calling brush paint');
-
     if(!this.toolsPalette.activeBrush){
       return
     }
