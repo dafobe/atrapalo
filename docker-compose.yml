@@ -1,9 +1,9 @@
 version: '2'
 
 services:
-  # Marfeel Test
+  # Atrapalo Test
   # Mounts the app as a volume and installs packages so we can develop locally
-  marfeel_test:
+  atrapalo_test:
     build: ./
     command: npm start
     volumes:
